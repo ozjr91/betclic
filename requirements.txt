@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+schedule
+flask
+flask-caching
+matplotlib
+python-dotenv

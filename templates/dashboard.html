@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de Bord Tipsters</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Top Tipsters Qualifiés</h1>
+    <img src="{{ image_path }}" alt="Graphique des Tipsters">
+
+    {% if qualified_tipsters %}
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Win Rate</th>
+                <th>Matchs à venir</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tipster in qualified_tipsters %}
+                <tr>
+                    <td><a href="{{ tipster.profile_url }}" target="_blank">{{ tipster.name }}</a></td>
+                    <td>{{ tipster.win_rate }}%</td>
+                    <td>
+                        {% if tipster.upcoming_matches %}
+                            <ul>
+                                {% for match in tipster.upcoming_matches %}
+                                    <li>
+                                        {{ match.day }} {{ match.time }} - {{ match.match }} - Tip: {{ match.tip }} - Odds: {{ match.odds }} - Score: {{ match.score }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Aucun match à venir trouvé.
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun tipster qualifié pour le moment.</p>
+    {% endif %}
+
+    <h2>Tips pour Demain (Page "Tomorrow Tips")</h2>  <!-- TITRE MODIFIÉ -->
+    {% if homepage_tips %}
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th>Tipster</th>
+                <th>Time</th>
+                <th>Match</th>
+                <th>Tip</th>
+                <th>Odds</th>
+                <th>Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tip in homepage_tips %}
+                <tr>
+                    <td>{{ tip.tipster_name }}</td>
+                    <td>{{ tip.time }}</td>
+                    <td>{{ tip.match }}</td>
+                    <td>{{ tip.tip }}</td>
+                    <td>{{ tip.odds }}</td>
+                    <td>{{ tip.score }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun tips de la page "Tomorrow Tips" trouvé pour le moment.</p> <!-- MESSAGE MIS À JOUR -->
+    {% endif %}
+</div>
+</body>
+</html>
